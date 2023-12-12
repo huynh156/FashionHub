@@ -27,7 +27,7 @@ namespace FashionHub.Controllers
         }
 
         // GET: Categories/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null || _context.Categories == null)
             {
@@ -59,6 +59,7 @@ namespace FashionHub.Controllers
         {
             if (ModelState.IsValid)
             {
+                category.CategoryId = Guid.NewGuid().ToString();
                 _context.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -67,7 +68,7 @@ namespace FashionHub.Controllers
         }
 
         // GET: Categories/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null || _context.Categories == null)
             {
@@ -87,7 +88,7 @@ namespace FashionHub.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName")] Category category)
+        public async Task<IActionResult> Edit(string id, [Bind("CategoryId,CategoryName")] Category category)
         {
             if (id != category.CategoryId)
             {
@@ -118,7 +119,7 @@ namespace FashionHub.Controllers
         }
 
         // GET: Categories/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null || _context.Categories == null)
             {
@@ -138,7 +139,7 @@ namespace FashionHub.Controllers
         // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (_context.Categories == null)
             {
@@ -154,7 +155,7 @@ namespace FashionHub.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CategoryExists(int id)
+        private bool CategoryExists(string id)
         {
           return (_context.Categories?.Any(e => e.CategoryId == id)).GetValueOrDefault();
         }

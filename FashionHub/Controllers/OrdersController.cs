@@ -26,7 +26,7 @@ namespace FashionHub.Controllers
         }
 
         // GET: Orders/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null || _context.Orders == null)
             {
@@ -47,7 +47,7 @@ namespace FashionHub.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId");
+            
             return View();
         }
 
@@ -60,6 +60,7 @@ namespace FashionHub.Controllers
         {
             if (ModelState.IsValid)
             {
+                order.OrderId = Guid.NewGuid().ToString();             
                 _context.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -69,7 +70,7 @@ namespace FashionHub.Controllers
         }
 
         // GET: Orders/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null || _context.Orders == null)
             {
@@ -90,7 +91,7 @@ namespace FashionHub.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrderId,UserId,OrderDate,TotalAmount")] Order order)
+        public async Task<IActionResult> Edit(string id, [Bind("OrderId,UserId,OrderDate,TotalAmount")] Order order)
         {
             if (id != order.OrderId)
             {
@@ -122,7 +123,7 @@ namespace FashionHub.Controllers
         }
 
         // GET: Orders/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null || _context.Orders == null)
             {
@@ -143,7 +144,7 @@ namespace FashionHub.Controllers
         // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (_context.Orders == null)
             {
@@ -159,7 +160,7 @@ namespace FashionHub.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool OrderExists(int id)
+        private bool OrderExists(string id)
         {
           return (_context.Orders?.Any(e => e.OrderId == id)).GetValueOrDefault();
         }

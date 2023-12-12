@@ -1,4 +1,7 @@
-﻿namespace FashionHub.Data
+﻿using System;
+using System.Collections.Generic;
+
+namespace FashionHub.Data
 {
     public partial class User
     {
@@ -10,7 +13,7 @@
             Wishlists = new HashSet<Wishlist>();
         }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; } = null!;
         public string? Username { get; set; }
         public string? Email { get; set; }
         public string? Password { get; set; }
@@ -18,6 +21,8 @@
         public string? Address { get; set; }
         public string? PhoneNumber { get; set; }
         public string? Role { get; set; }
+        public string? RandomKey { get; set; }
+        public bool? IsActive { get; set; }
 
         public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<Order> Orders { get; set; }

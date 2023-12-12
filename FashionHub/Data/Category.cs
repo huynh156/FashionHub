@@ -1,4 +1,7 @@
-﻿namespace FashionHub.Data
+﻿using System;
+using System.Collections.Generic;
+
+namespace FashionHub.Data
 {
     public partial class Category
     {
@@ -7,7 +10,7 @@
             Products = new HashSet<Product>();
         }
 
-        public int CategoryId { get; set; }
+        public string CategoryId { get; set; } = null!;
         public string? CategoryName { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
