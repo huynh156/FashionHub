@@ -1,0 +1,335 @@
+USE [master]
+GO
+/****** Object:  Database [FashionHub]    Script Date: 16/12/2023 10:37:49 PM ******/
+CREATE DATABASE [FashionHub]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'FashionHub', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\FashionHub.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'FashionHub_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL14.MSSQLSERVER\MSSQL\DATA\FashionHub_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+GO
+ALTER DATABASE [FashionHub] SET COMPATIBILITY_LEVEL = 140
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [FashionHub].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [FashionHub] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [FashionHub] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [FashionHub] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [FashionHub] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [FashionHub] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [FashionHub] SET AUTO_CLOSE ON 
+GO
+ALTER DATABASE [FashionHub] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [FashionHub] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [FashionHub] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [FashionHub] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [FashionHub] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [FashionHub] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [FashionHub] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [FashionHub] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [FashionHub] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [FashionHub] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [FashionHub] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [FashionHub] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [FashionHub] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [FashionHub] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [FashionHub] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [FashionHub] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [FashionHub] SET RECOVERY SIMPLE 
+GO
+ALTER DATABASE [FashionHub] SET  MULTI_USER 
+GO
+ALTER DATABASE [FashionHub] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [FashionHub] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [FashionHub] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [FashionHub] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [FashionHub] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [FashionHub] SET QUERY_STORE = OFF
+GO
+USE [FashionHub]
+GO
+/****** Object:  User [ADMIN123]    Script Date: 16/12/2023 10:37:49 PM ******/
+CREATE USER [ADMIN123] FOR LOGIN [ADMIN123] WITH DEFAULT_SCHEMA=[dbo]
+GO
+/****** Object:  User [admin]    Script Date: 16/12/2023 10:37:49 PM ******/
+CREATE USER [admin] FOR LOGIN [admin] WITH DEFAULT_SCHEMA=[dbo]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [ADMIN123]
+GO
+ALTER ROLE [db_accessadmin] ADD MEMBER [ADMIN123]
+GO
+ALTER ROLE [db_securityadmin] ADD MEMBER [ADMIN123]
+GO
+ALTER ROLE [db_ddladmin] ADD MEMBER [ADMIN123]
+GO
+ALTER ROLE [db_backupoperator] ADD MEMBER [ADMIN123]
+GO
+ALTER ROLE [db_datareader] ADD MEMBER [ADMIN123]
+GO
+ALTER ROLE [db_datawriter] ADD MEMBER [ADMIN123]
+GO
+ALTER ROLE [db_denydatareader] ADD MEMBER [ADMIN123]
+GO
+ALTER ROLE [db_denydatawriter] ADD MEMBER [ADMIN123]
+GO
+ALTER ROLE [db_owner] ADD MEMBER [admin]
+GO
+ALTER ROLE [db_accessadmin] ADD MEMBER [admin]
+GO
+ALTER ROLE [db_securityadmin] ADD MEMBER [admin]
+GO
+ALTER ROLE [db_ddladmin] ADD MEMBER [admin]
+GO
+ALTER ROLE [db_backupoperator] ADD MEMBER [admin]
+GO
+ALTER ROLE [db_datareader] ADD MEMBER [admin]
+GO
+ALTER ROLE [db_datawriter] ADD MEMBER [admin]
+GO
+ALTER ROLE [db_denydatareader] ADD MEMBER [admin]
+GO
+ALTER ROLE [db_denydatawriter] ADD MEMBER [admin]
+GO
+/****** Object:  Table [dbo].[Brands]    Script Date: 16/12/2023 10:37:50 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Brands](
+	[BrandID] varchar(50) NOT NULL,
+	[BrandName] [nvarchar](255) NULL,
+	[Description] [text] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[BrandID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Carts]    Script Date: 16/12/2023 10:37:50 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Carts](
+	[UserID] [varchar](50) NULL,
+	[ProductID] [varchar](50) NULL,
+	[Quantity] [int] NULL,
+)
+GO
+/****** Object:  Table [dbo].[Categories]    Script Date: 16/12/2023 10:37:50 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Categories](
+	[CategoryID] [varchar](50) NOT NULL,
+	[CategoryName] [nvarchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[CategoryID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Coupons]    Script Date: 16/12/2023 10:37:50 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Coupons](
+	[CouponID] [varchar](50) NOT NULL,
+	[Code] [varchar](255) NULL,
+	[DiscountPercentage] [decimal](5, 2) NULL,
+	[ExpiryDate] [date] NULL,
+	[IsActive] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[CouponID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[Code] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[OrderDetails]    Script Date: 16/12/2023 10:37:50 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[OrderDetails](
+	[OrderDetailID] [varchar](50) NOT NULL,
+	[OrderID] [varchar](50) NULL,
+	[ProductID] [varchar](50) NULL,
+	[Quantity] [int] NULL,
+	[Subtotal] [decimal](10, 2) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[OrderDetailID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Orders]    Script Date: 16/12/2023 10:37:50 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Orders](
+	[OrderID] [varchar](50) NOT NULL,
+	[UserID] [varchar](50) NULL,
+	[OrderDate] [date] NULL,
+	[TotalAmount] [decimal](10, 2) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[OrderID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Products]    Script Date: 16/12/2023 10:37:50 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Products](
+	[ProductID] [varchar](50) NOT NULL,
+	[ProductName] [nvarchar](255) NULL,
+	[BrandID] [varchar](50) NULL,
+	[CategoryID] [varchar](50) NULL,
+	[Description] [text] NULL,
+	[Price] [decimal](10, 2) NULL,
+	[StockQuantity] [int] NULL,
+	[Image] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ProductID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Reviews]    Script Date: 16/12/2023 10:37:50 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Reviews](
+	[ReviewID] [varchar](50) NOT NULL,
+	[UserID] [varchar](50) NULL,
+	[ProductID] [varchar](50) NULL,
+	[Rating] [int] NULL,
+	[Comment] [text] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ReviewID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 16/12/2023 10:37:50 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Users](
+	[UserID] [varchar](50) NOT NULL,
+	[Username] [nvarchar](255) NULL,
+	[Email] [varchar](255) NULL,
+	[Password] [varchar](255) NULL,
+	[FullName] [nvarchar](255) NULL,
+	[Address] [varchar](255) NULL,
+	[PhoneNumber] [varchar](20) NULL,
+	[Role] [nvarchar](20) NULL,
+	[RandomKey] [nvarchar](255) NULL,
+	[IsActive] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Wishlists]    Script Date: 16/12/2023 10:37:50 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Wishlists](
+	[WishlistID] [varchar](50) NOT NULL,
+	[UserID] [varchar](50) NULL,
+	[ProductID] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[WishlistID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Users] ADD  DEFAULT ((0)) FOR [IsActive]
+GO
+ALTER TABLE [dbo].[Carts]  WITH CHECK ADD FOREIGN KEY([ProductID])
+REFERENCES [dbo].[Products] ([ProductID])
+GO
+ALTER TABLE [dbo].[Carts]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([UserID])
+GO
+ALTER TABLE [dbo].[OrderDetails]  WITH CHECK ADD FOREIGN KEY([OrderID])
+REFERENCES [dbo].[Orders] ([OrderID])
+GO
+ALTER TABLE [dbo].[OrderDetails]  WITH CHECK ADD FOREIGN KEY([ProductID])
+REFERENCES [dbo].[Products] ([ProductID])
+GO
+ALTER TABLE [dbo].[Orders]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([UserID])
+GO
+ALTER TABLE [dbo].[Products]  WITH CHECK ADD FOREIGN KEY([BrandID])
+REFERENCES [dbo].[Brands] ([BrandID])
+GO
+ALTER TABLE [dbo].[Products]  WITH CHECK ADD  CONSTRAINT [FK_Products_CategoryID] FOREIGN KEY([CategoryID])
+REFERENCES [dbo].[Categories] ([CategoryID])
+GO
+ALTER TABLE [dbo].[Products] CHECK CONSTRAINT [FK_Products_CategoryID]
+GO
+ALTER TABLE [dbo].[Products]  WITH CHECK ADD  CONSTRAINT [FK_Products_Products] FOREIGN KEY([ProductID])
+REFERENCES [dbo].[Products] ([ProductID])
+GO
+ALTER TABLE [dbo].[Products] CHECK CONSTRAINT [FK_Products_Products]
+GO
+ALTER TABLE [dbo].[Reviews]  WITH CHECK ADD FOREIGN KEY([ProductID])
+REFERENCES [dbo].[Products] ([ProductID])
+GO
+ALTER TABLE [dbo].[Reviews]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([UserID])
+GO
+ALTER TABLE [dbo].[Wishlists]  WITH CHECK ADD FOREIGN KEY([ProductID])
+REFERENCES [dbo].[Products] ([ProductID])
+GO
+ALTER TABLE [dbo].[Wishlists]  WITH CHECK ADD FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([UserID])
+GO
+USE [master]
+GO
+ALTER DATABASE [FashionHub] SET  READ_WRITE 
+GO
