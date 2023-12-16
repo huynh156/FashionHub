@@ -10,7 +10,7 @@ namespace FashionHub.Data
             Products = new HashSet<Product>();
         }
 
-        public int BrandId { get; set; }
+        public string BrandId { get; set; } = null!;
         public string? BrandName { get; set; }
         public string? Description { get; set; }
 

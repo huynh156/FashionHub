@@ -5,7 +5,6 @@ namespace FashionHub.Data
 {
     public partial class Cart
     {
-        public int CartId { get; set; }
         public string? UserId { get; set; }
         public string? ProductId { get; set; }
         public int? Quantity { get; set; }

@@ -7,7 +7,6 @@ namespace FashionHub.Data
     {
         public User()
         {
-            Carts = new HashSet<Cart>();
             Orders = new HashSet<Order>();
             Reviews = new HashSet<Review>();
             Wishlists = new HashSet<Wishlist>();
@@ -24,7 +23,6 @@ namespace FashionHub.Data
         public string? RandomKey { get; set; }
         public bool? IsActive { get; set; }
 
-        public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Wishlist> Wishlists { get; set; }

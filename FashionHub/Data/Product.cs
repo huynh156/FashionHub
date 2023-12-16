@@ -7,7 +7,6 @@ namespace FashionHub.Data
     {
         public Product()
         {
-            Carts = new HashSet<Cart>();
             OrderDetails = new HashSet<OrderDetail>();
             Reviews = new HashSet<Review>();
             Wishlists = new HashSet<Wishlist>();
@@ -15,7 +14,7 @@ namespace FashionHub.Data
 
         public string ProductId { get; set; } = null!;
         public string? ProductName { get; set; }
-        public int? BrandId { get; set; }
+        public string? BrandId { get; set; }
         public string? CategoryId { get; set; }
         public string? Description { get; set; }
         public decimal? Price { get; set; }
@@ -24,7 +23,6 @@ namespace FashionHub.Data
 
         public virtual Brand? Brand { get; set; }
         public virtual Category? Category { get; set; }
-        public virtual ICollection<Cart> Carts { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Wishlist> Wishlists { get; set; }
