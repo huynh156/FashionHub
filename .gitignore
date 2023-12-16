@@ -3,6 +3,14 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+
+# Ignore appsettings.json file
+appsettings.json
+
+# Ignore a directory named 'credentials'
+credentials/
+
+
 # User-specific files
 *.rsuser
 *.suo

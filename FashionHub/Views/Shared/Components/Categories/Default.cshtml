@@ -1,0 +1,14 @@
+﻿@model IEnumerable<FashionHub.ViewModels.CategoriesVM> 
+
+<div class="filter-sidebar-left">
+    <div class="title-left">
+        <h3>Categories</h3>
+    </div>
+    <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
+        @foreach (var item in Model)
+        {
+             <a href="#" class="list-group-item list-group-item-action"> @item.CategoryName  <small class="text-muted">(150) </small></a>
+        }
+        
+    </div>
+</div>

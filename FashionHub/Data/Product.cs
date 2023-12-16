@@ -13,13 +13,14 @@ namespace FashionHub.Data
             Wishlists = new HashSet<Wishlist>();
         }
 
-        public int ProductId { get; set; }
+        public string ProductId { get; set; } = null!;
         public string? ProductName { get; set; }
         public int? BrandId { get; set; }
         public string? CategoryId { get; set; }
         public string? Description { get; set; }
         public decimal? Price { get; set; }
         public int? StockQuantity { get; set; }
+        public string? Image { get; set; }
 
         public virtual Brand? Brand { get; set; }
         public virtual Category? Category { get; set; }
