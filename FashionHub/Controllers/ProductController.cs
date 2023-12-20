@@ -1,5 +1,6 @@
 ﻿using FashionHub.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 
 namespace FashionHub.Controllers
@@ -20,7 +21,9 @@ namespace FashionHub.Controllers
 		// GET: Product/Create
 		public IActionResult Create()
 		{
-			return View();
+            ViewBag.Brands= new SelectList(_context.Brands.ToList(), "Id", "Name");
+            ViewBag.Categories = new SelectList(_context.Categories.ToList(), "Id", "NameVn");
+            return View();
 		}
 
 		// POST: Product/Create
@@ -30,22 +33,28 @@ namespace FashionHub.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create([Bind("ProductId,ProductName")] Product product)
 		{
-			if (ModelState.IsValid)
+            ViewBag.Brands = new SelectList(_context.Brands.ToList(), "Id", "Name");
+            ViewBag.Categories = new SelectList(_context.Categories.ToList(), "Id", "NameVn");
+            if (ModelState.IsValid)
 			{
-                PurchaseOrder purchaseOrder = new PurchaseOrder
-                {
-                    OrderId = Guid.NewGuid().ToString(),
-                    // Copy các trường khác tùy thuộc vào yêu cầu của bạn
-                    ProductId = product.ProductId, // Copy ProductId hoặc trường khác từ Product
-                    Quantity = product.StockQuantity // Copy ProductName hoặc trường khác từ Product
-                };
+				//PurchaseOrder purchaseOrder = new PurchaseOrder
+				//{
+				//	OrderId = Guid.NewGuid().ToString(),
+				//	// Copy các trường khác tùy thuộc vào yêu cầu của bạn
+				//	ProductId = product.ProductId, // Copy ProductId hoặc trường khác từ Product
+				//	Quantity = product.StockQuantity, // Copy ProductName hoặc trường khác từ Product
+				//	OrderDate = DateTime.Now,
+				//	BrandId = product.BrandId,
+
+    //            };
 
 
                 product.ProductId = Guid.NewGuid().ToString();
 				var old_StockQuantity = _context.Products.Where(x => x.ProductId == product.ProductId).FirstOrDefault();
                 product.StockQuantity = old_StockQuantity.StockQuantity + product.StockQuantity;
 				_context.Add(product);
-				await _context.SaveChangesAsync();
+                //_context.Add(purchaseOrder);
+                await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));
 			}
 			return View(product);

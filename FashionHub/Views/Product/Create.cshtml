@@ -3,7 +3,88 @@
 @{
     ViewData["Title"] = "AdminCreate";
 }
+<head>
+   @*  <script>
+        let productRowCounter = 0;
 
+        function addProductRow(formId) {
+            const productRowsContainer = document.getElementById(`productRows${formId}`);
+
+            const productRow = document.createElement('div');
+            const formId = Date.now();
+            productRow.id = `productRow${productRowCounter}${formId}`;
+            
+
+            productRowsContainer.appendChild(productRow);
+            productRowCounter++;
+        }
+
+        function addNewForm() {
+            const productRowsContainer = document.getElementById(`productRowsContainer${formId}`);
+            const formId = Date.now();  // Tạo một ID duy nhất cho mỗi form mới
+
+            const newForm = document.createElement('div');
+            newForm.id = `formContainer${formId}`;
+
+            const newFormContent = `
+                <div class="abc">
+                 <form asp-action="Create" id="formCreateNew${formId}">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="ProductId" class="control-label"></label>
+                    <input asp-for="ProductId" class="form-control" />
+                    <span asp-validation-for="ProductId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ProductId" class="control-label"></label>
+                    <input asp-for="ProductId" class="form-control" />
+                    <span asp-validation-for="ProductId" class="text-danger"></span>
+                </div>
+                    <div class="form-group">
+                    <label asp-for="ProductName" class="control-label"></label>
+                    <input asp-for="ProductName" class="form-control" />
+                    <span asp-validation-for="ProductName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Brand.BrandName" class="control-label"></label>
+                    <select asp-for="Brand.BrandName" class ="form-control" asp-items="ViewBag.BrandId"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Category.CategoryName" class="control-label"></label>
+                    <select asp-for="Category.CategoryName" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="StockQuantity" class="control-label">Quantity</label>
+                    <input asp-for="StockQuantity" class="form-control" />
+                    <span asp-validation-for="StockQuantity" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Image" class="control-label"></label>
+                    <input type="file" name="ProductImage" class="form-control" />
+                </div>
+                </form>
+                <button onclick="addProductRow(${formId})">Add Product</button>
+                </div>
+                `;
+
+            newForm.innerHTML = newFormContent;
+            productRowsContainer.appendChild(newForm);
+        }
+
+        // Load products on page load
+        loadProducts();
+    </script> *@
+</head>
 <h1>AdminCreate</h1>
 
 <h4>Product</h4>
@@ -24,11 +105,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="Brand.BrandName" class="control-label"></label>
-                <select asp-for="Brand.BrandName" class ="form-control" asp-items="ViewBag.BrandId"></select>
+                <select asp-for="Brand.BrandName" class ="form-control" asp-items="@ViewBag.Brands"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Category.CategoryName" class="control-label"></label>
-                <select asp-for="Category.CategoryName" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+                <select asp-for="Category.CategoryName" class ="form-control" asp-items="@ViewBag.Categories"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
@@ -53,12 +134,28 @@
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
+
+
     </div>
 </div>
-
+<!-- Form mới -->
+@* <div class="row">
+    <div class="abc">
+        <form asp-action="Create" id="formCreateNew">
+            <!-- ... (các trường của form mới) -->
+        </form>
+        <button onclick="addNewForm()">Add New Form</button>
+    </div>
+</div>
+ *@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+
+
+
+
 
 <style>
     .form-group {
@@ -75,7 +172,7 @@
 
     /* Điều chỉnh chiều rộng cho form */
     .col-md-4 {
-        max-width:100%; /* Điều chỉnh theo ý muốn */
+        max-width:90%;/*iều chỉnh theo ý muốn */
         margin: 0 auto; /* Canh giữa form */
     }
 </style>
