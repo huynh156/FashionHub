@@ -9,7 +9,7 @@
 <h4>Product</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="abc">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -23,12 +23,12 @@
                 <span asp-validation-for="ProductName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BrandId" class="control-label"></label>
-                <select asp-for="BrandId" class ="form-control" asp-items="ViewBag.BrandId"></select>
+                <label asp-for="Brand.BrandName" class="control-label"></label>
+                <select asp-for="Brand.BrandName" class ="form-control" asp-items="ViewBag.BrandId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+                <label asp-for="Category.CategoryName" class="control-label"></label>
+                <select asp-for="Category.CategoryName" class ="form-control" asp-items="ViewBag.CategoryId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
@@ -40,16 +40,16 @@
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                <label asp-for="StockQuantity" class="control-label"></label>
+            <div class="form-group">
+                <label asp-for="StockQuantity" class="control-label">Quantity</label>
                 <input asp-for="StockQuantity" class="form-control" />
                 <span asp-validation-for="StockQuantity" class="text-danger"></span>
-            </div>*@
+            </div>
              <div class="form-group">
                 <label asp-for="Image" class="control-label"></label>
                 <input type="file" name="ProductImage" class="form-control" />
             </div>
-            <div class="form-group">
+            <div class="form-group1">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -59,4 +59,24 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+<style>
+    .form-group {
+        display: inline-block;
+        width:10%; /* Điều chỉnh chiều rộng theo ý muốn */
+        margin-right: 2%; /* Tạo khoảng cách giữa các khối */
+        vertical-align: top; /* Hiển thị các khối cùng một hàng ngang */
+    }
+
+    form {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    /* Điều chỉnh chiều rộng cho form */
+    .col-md-4 {
+        max-width:100%; /* Điều chỉnh theo ý muốn */
+        margin: 0 auto; /* Canh giữa form */
+    }
+</style>
 

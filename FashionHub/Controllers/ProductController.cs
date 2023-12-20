@@ -1,5 +1,6 @@
 ﻿using FashionHub.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 
 namespace FashionHub.Controllers
 {
@@ -31,7 +32,18 @@ namespace FashionHub.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				product.ProductId = Guid.NewGuid().ToString();
+                PurchaseOrder purchaseOrder = new PurchaseOrder
+                {
+                    OrderId = Guid.NewGuid().ToString(),
+                    // Copy các trường khác tùy thuộc vào yêu cầu của bạn
+                    ProductId = product.ProductId, // Copy ProductId hoặc trường khác từ Product
+                    Quantity = product.StockQuantity // Copy ProductName hoặc trường khác từ Product
+                };
+
+
+                product.ProductId = Guid.NewGuid().ToString();
+				var old_StockQuantity = _context.Products.Where(x => x.ProductId == product.ProductId).FirstOrDefault();
+                product.StockQuantity = old_StockQuantity.StockQuantity + product.StockQuantity;
 				_context.Add(product);
 				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));

@@ -8,6 +8,7 @@ namespace FashionHub.Data
         public Brand()
         {
             Products = new HashSet<Product>();
+            PurchaseOrders = new HashSet<PurchaseOrder>();
         }
 
         public string BrandId { get; set; } = null!;
@@ -15,5 +16,6 @@ namespace FashionHub.Data
         public string? Description { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
     }
 }
