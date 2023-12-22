@@ -13,10 +13,10 @@ Mô tả dự án: Là dự án web-ecommerce cơ bản và tiêu chuẩn, có �
   </tr>
   <tr>
     <td>Nguyễn Văn Linh</td>
-    <td>20000....</td>
+    <td>200004278</td>
    
   </tr>
   <tr>
     <td>Ngô Phước Sang</td>
-    <td>200000....</td>
+    <td>2000001530</td>
 </table>
