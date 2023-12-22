@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FashionHub.Data;
+using FashionHub.Models;
 
 namespace FashionHub.Controllers
 {
@@ -74,6 +75,7 @@ namespace FashionHub.Controllers
 
             if (ModelState.IsValid)
             {
+                product.ProductId = Guid.NewGuid().ToString();
                 PurchaseOrder purchaseOrder = new PurchaseOrder
                 {
                     OrderId = Guid.NewGuid().ToString(),
@@ -85,10 +87,20 @@ namespace FashionHub.Controllers
 
                 };
 
+                if (ProductImage != null)
+                {
+                    product.Image = MyTool.UploadImageToFolder(ProductImage, "Products");
+                }
 
-                product.ProductId = Guid.NewGuid().ToString();
-                var old_StockQuantity = _context.Products.Where(x => x.ProductId == product.ProductId).FirstOrDefault();
-                product.StockQuantity = old_StockQuantity.StockQuantity + product.StockQuantity;
+                var old_StockQuantity = _context.Products.Where(x => x.ProductId == product.ProductId).Select(x => x.StockQuantity).FirstOrDefault();
+                if (old_StockQuantity.HasValue)
+                {
+                    product.StockQuantity = old_StockQuantity.Value + product.StockQuantity;
+                }
+                else
+                {
+                    product.StockQuantity=product.StockQuantity;
+                }
                 _context.Add(product);
                 _context.Add(purchaseOrder);
                 await _context.SaveChangesAsync();
