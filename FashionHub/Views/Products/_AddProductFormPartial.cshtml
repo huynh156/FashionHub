@@ -38,7 +38,33 @@
         </div>
         <div class="form-group">
             <label asp-for="Image" class="control-label"></label>
-            <input type="file" name="ProductImage" class="form-control" />
+            <input type="file" name="ProductImage" class="form-control"/>
         </div>
     </form>
 </div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#dynamicForm').submit(function (e) {
+                e.preventDefault();
+
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: '/Products/Create', 
+                    type: 'POST', 
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (result) {
+                        // Xử lý kết quả từ Controller (nếu cần)
+                    },
+                    error: function (error) {
+                        // Xử lý lỗi (nếu có)
+                    }
+                });
+            });
+        });
+    </script>
+}

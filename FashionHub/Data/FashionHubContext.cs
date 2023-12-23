@@ -68,12 +68,12 @@ namespace FashionHub.Data
                 entity.HasOne(d => d.Product)
                     .WithMany()
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__Carts__ProductID__08B54D69");
+                    .HasConstraintName("FK__Carts__ProductID__4BAC3F29");
 
                 entity.HasOne(d => d.User)
                     .WithMany()
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Carts__UserID__09A971A2");
+                    .HasConstraintName("FK__Carts__UserID__4CA06362");
             });
 
             modelBuilder.Entity<Category>(entity =>
@@ -88,7 +88,7 @@ namespace FashionHub.Data
 
             modelBuilder.Entity<Coupon>(entity =>
             {
-                entity.HasIndex(e => e.Code, "UQ__Coupons__A25C5AA7944B3D76")
+                entity.HasIndex(e => e.Code, "UQ__Coupons__A25C5AA7D08B879B")
                     .IsUnique();
 
                 entity.Property(e => e.CouponId)
@@ -124,7 +124,7 @@ namespace FashionHub.Data
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Orders__UserID__0C85DE4D");
+                    .HasConstraintName("FK__Orders__UserID__4F7CD00D");
             });
 
             modelBuilder.Entity<OrderDetail>(entity =>
@@ -149,12 +149,12 @@ namespace FashionHub.Data
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.OrderId)
-                    .HasConstraintName("FK__OrderDeta__Order__0A9D95DB");
+                    .HasConstraintName("FK__OrderDeta__Order__4D94879B");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__OrderDeta__Produ__0B91BA14");
+                    .HasConstraintName("FK__OrderDeta__Produ__4E88ABD4");
             });
 
             modelBuilder.Entity<Product>(entity =>
@@ -192,7 +192,7 @@ namespace FashionHub.Data
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.BrandId)
-                    .HasConstraintName("FK__Products__BrandI__0D7A0286");
+                    .HasConstraintName("FK__Products__BrandI__5070F446");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Products)
@@ -207,13 +207,10 @@ namespace FashionHub.Data
 
             modelBuilder.Entity<PurchaseOrder>(entity =>
             {
-                entity.HasKey(e => e.OrderId)
-                    .HasName("PK__Purchase__C3905BAF9501C776");
-
-                entity.Property(e => e.OrderId)
+                entity.Property(e => e.Id)
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("OrderID");
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.BrandId)
                     .HasMaxLength(50)
@@ -221,6 +218,11 @@ namespace FashionHub.Data
                     .HasColumnName("BrandID");
 
                 entity.Property(e => e.OrderDate).HasColumnType("date");
+
+                entity.Property(e => e.OrderId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("OrderID");
 
                 entity.Property(e => e.ProductId)
                     .HasMaxLength(50)
@@ -230,12 +232,12 @@ namespace FashionHub.Data
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.PurchaseOrders)
                     .HasForeignKey(d => d.BrandId)
-                    .HasConstraintName("FK__PurchaseO__Brand__0E6E26BF");
+                    .HasConstraintName("FK__PurchaseO__Brand__5441852A");
 
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.PurchaseOrders)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__PurchaseO__Produ__0F624AF8");
+                    .HasConstraintName("FK__PurchaseO__Produ__5535A963");
             });
 
             modelBuilder.Entity<Review>(entity =>
@@ -260,12 +262,12 @@ namespace FashionHub.Data
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__Reviews__Product__10566F31");
+                    .HasConstraintName("FK__Reviews__Product__5629CD9C");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Reviews__UserID__114A936A");
+                    .HasConstraintName("FK__Reviews__UserID__571DF1D5");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -322,12 +324,12 @@ namespace FashionHub.Data
                 entity.HasOne(d => d.Product)
                     .WithMany(p => p.Wishlists)
                     .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("FK__Wishlists__Produ__123EB7A3");
+                    .HasConstraintName("FK__Wishlists__Produ__5812160E");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Wishlists)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Wishlists__UserI__1332DBDC");
+                    .HasConstraintName("FK__Wishlists__UserI__59063A47");
             });
 
             OnModelCreatingPartial(modelBuilder);

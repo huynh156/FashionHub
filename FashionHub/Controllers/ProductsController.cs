@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FashionHub.Data;
+using FashionHub.Models;
 
 namespace FashionHub.Controllers
 {
@@ -24,7 +25,39 @@ namespace FashionHub.Controllers
             var fashionHubContext = _context.Products.Include(p => p.Brand).Include(p => p.Category).Include(p => p.Coupon);
             return View(await fashionHubContext.ToListAsync());
         }
+        #region Sản phẩm đã bán
+        public ActionResult HangTonKho()// Tổng số lượng đã bán
+        {
+           
+                var data = _context.Products.GroupBy(p => new
+                {
+                    p.ProductName
+                })
+                        .Select(g => new HangTonKho
+                        {
+                            ProductName = g.Key.ProductName,
+                            StockQuantity = g.Sum(ct => ct.StockQuantity),
 
+                        }).ToList();
+                return View(data);
+        }
+        public ActionResult HangTonKhoChart()
+        {
+            var data = _context.Products.GroupBy(p => new
+            {
+                p.ProductName
+            })
+                        .Select(g => new HangTonKho
+                        {
+                            ProductName = g.Key.ProductName,
+                            StockQuantity = g.Sum(ct => ct.StockQuantity),
+
+                        }).ToList();
+
+            return Json(data);
+
+        }
+        #endregion Sản phẩm đã bán
         public IActionResult GetForm()
         {
 
@@ -74,24 +107,66 @@ namespace FashionHub.Controllers
 
             if (ModelState.IsValid)
             {
+                var errors = ModelState.Values.SelectMany(v => v.Errors);
+                foreach (var error in errors)
+                {
+                    Console.WriteLine(error.ErrorMessage);
+                }
+                // Kiểm tra xem OrderID đã được tạo chưa, nếu chưa thì tạo mới và lưu vào Session
+                if (string.IsNullOrEmpty(HttpContext.Session.GetString("CurrentOrderId")))
+                {
+                    HttpContext.Session.SetString("CurrentOrderId", Guid.NewGuid().ToString());
+                }
+
+                // Gán OrderID từ Session vào biến currentOrderId
+                string currentOrderId = HttpContext.Session.GetString("CurrentOrderId");
+
+                // Tạo một PurchaseOrder với OrderID hiện tại
                 PurchaseOrder purchaseOrder = new PurchaseOrder
                 {
-                    OrderId = Guid.NewGuid().ToString(),
-                    
-                    ProductId = product.ProductId,
+                    Id = Guid.NewGuid().ToString(),
+                    OrderId = currentOrderId,
+                    ProductId = Guid.NewGuid().ToString(),
                     Quantity = product.StockQuantity,
                     OrderDate = DateTime.Now,
                     BrandId = product.BrandId,
-
                 };
 
+                // Kiểm tra xem sản phẩm có tồn tại trong cơ sở dữ liệu không
+                var existingProduct = _context.Products.FirstOrDefault(p => p.ProductName == product.ProductName);
 
-                product.ProductId = Guid.NewGuid().ToString();
-                var old_StockQuantity = _context.Products.Where(x => x.ProductId == product.ProductId).FirstOrDefault();
-                product.StockQuantity = old_StockQuantity.StockQuantity + product.StockQuantity;
-                _context.Add(product);
+                if (existingProduct != null)
+                {
+                    // Nếu sản phẩm đã tồn tại, cập nhật thông tin của nó
+                    purchaseOrder.ProductId=existingProduct.ProductId;
+                    existingProduct.Price = product.Price;
+                    existingProduct.StockQuantity += product.StockQuantity;
+                    existingProduct.Description = product.Description;
+                    if (ProductImage != null)
+                    {
+                        existingProduct.Image = MyTool.UploadImageToFolder(ProductImage, "Products");
+                    }
+                }
+                else
+                {
+                    // Nếu sản phẩm chưa tồn tại, gán OrderID và sử dụng ProductID đã tạo trước đó
+                    product.ProductId = purchaseOrder.ProductId;
+                    if (ProductImage != null)
+                    {
+                        product.Image = MyTool.UploadImageToFolder(ProductImage, "Products");
+                    }
+
+                    // Thêm sản phẩm vào cơ sở dữ liệu
+                    _context.Add(product);
+                }
+
+                // Thêm PurchaseOrder vào cơ sở dữ liệu
                 _context.Add(purchaseOrder);
+
+                // Lưu thay đổi vào cơ sở dữ liệu
                 await _context.SaveChangesAsync();
+
+                // Chuyển hướng đến trang Index hoặc nơi khác tùy thuộc vào logic của bạn
                 return RedirectToAction(nameof(Index));
             }
 

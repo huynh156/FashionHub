@@ -10,6 +10,7 @@ namespace FashionHub.Data
         public int? Quantity { get; set; }
         public DateTime? OrderDate { get; set; }
         public string? BrandId { get; set; }
+        public string Id { get; set; } = null!;
 
         public virtual Brand? Brand { get; set; }
         public virtual Product? Product { get; set; }
