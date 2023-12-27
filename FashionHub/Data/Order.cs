@@ -14,7 +14,9 @@ namespace FashionHub.Data
         public string? UserId { get; set; }
         public DateTime? OrderDate { get; set; }
         public decimal? TotalAmount { get; set; }
+        public string? CouponId { get; set; }
 
+        public virtual Coupon? Coupon { get; set; }
         public virtual User? User { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }

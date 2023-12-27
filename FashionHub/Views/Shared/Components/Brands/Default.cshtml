@@ -1,0 +1,15 @@
+﻿@model IEnumerable<FashionHub.ViewModels.BrandsVM>
+
+<div class="brand-box">
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li>
+                <div class="radio radio-danger">
+                    <input name="survey" id="@item.BrandId" value="Yes" type="radio">
+                    <label for="@item.BrandName"> @item.BrandName </label>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

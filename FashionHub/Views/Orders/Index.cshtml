@@ -19,6 +19,9 @@
                 @Html.DisplayNameFor(model => model.TotalAmount)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Coupon)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.User)
             </th>
             <th></th>
@@ -32,6 +35,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TotalAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Coupon.CouponId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.User.UserId)

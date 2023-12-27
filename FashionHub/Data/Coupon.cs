@@ -7,6 +7,7 @@ namespace FashionHub.Data
     {
         public Coupon()
         {
+            Orders = new HashSet<Order>();
             Products = new HashSet<Product>();
         }
 
@@ -15,7 +16,11 @@ namespace FashionHub.Data
         public decimal? DiscountPercentage { get; set; }
         public DateTime? ExpiryDate { get; set; }
         public bool? IsActive { get; set; }
+        public int? Quantity { get; set; }
+        public string? ProductId { get; set; }
 
+        public virtual Product? Product { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
         public virtual ICollection<Product> Products { get; set; }
     }
 }
