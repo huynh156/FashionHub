@@ -19,7 +19,7 @@ namespace FashionHub.ViewComponents
             {
                 BrandId = a.BrandId,
                 BrandName = a.BrandName
-            }) ;
+            });
             return View(data);
 
         }

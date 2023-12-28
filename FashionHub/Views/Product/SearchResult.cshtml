@@ -1,0 +1,24 @@
+﻿@model IEnumerable<FashionHub.ViewModels.SearchResultVM>
+
+<section id="product">
+    
+    <div class="pro-container">
+        @foreach (var item in Model)
+        {
+            <div class="pro">
+                <a href="/Product/@item.ProductId" class="div-click">
+                    <img src="~/Images/Products/@item.Image" alt="@item.ProductName" />
+                    <div class="des">
+                        <span>@item.BrandName</span>
+                        <h5>@item.ProductName</h5>
+                        <h4>$ @item.Price </h4>
+                    </div>
+                </a>
+                <a asp-action="AddToCart"  asp-route-id="@item.ProductId" asp-route-price="@item.Price">Thêm vào giỏ hàng</a>
+            </div>
+
+
+        }
+    </div>
+
+</section>

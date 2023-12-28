@@ -1,15 +1,18 @@
-﻿<!-- Start Shop Page  -->
+﻿ @model IEnumerable<FashionHub.ViewModels.ProductVM>
+ <!-- Start Shop Page  -->
     <div class="shop-box-inner">
         <div class="container">
             <div class="row">
                 <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
                     <div class="product-categori">
                         <div class="search-product">
-                            <form action="#">
-                            <input id="btnFind" class="form-control" placeholder="Search here..." type="text">
+                            <form asp-controller="Product" asp-action="Search" method="get">
+                                <input class="form-control" name="keyword" placeholder="Search here..." type="text">
                                 <button type="submit"> <i class="fa fa-search"></i> </button>
-                        </form>
-                        @await Component.InvokeAsync("Categories")
+                            </form>
+                            
+                        </div>
+                         @await Component.InvokeAsync("Categories")
                         <div class="filter-price-left">
                             <div class="title-left">
                                 <h3>Price</h3>
@@ -26,7 +29,9 @@
                             <div class="title-left">
                                 <h3>Brand</h3>
                             </div>
-                        @await Component.InvokeAsync("Brands")
+                            <div class="brand-box">
+                                    @await Component.InvokeAsync("Brands")
+                            </div>
                         </div>
 
                     </div>
@@ -63,9 +68,32 @@
                             <div class="tab-content">
                                 <div role="tabpanel" class="tab-pane fade show active" id="grid-view">
                                     <div class="row">
-                                    @{
-                                        Html.RenderPartial("_Product");
-                                    }
+                                        @foreach (var item in Model)
+                                        {
+                                            <div class="col-sm-6 col-md-6 col-lg-4 col-xl-4">
+                                                <div class="products-single fix">
+                                                    <div class="box-img-hover">
+                                                        <div class="type-lb">
+                                                            @* <p class="sale">Sale</p> *@
+                                                        </div>
+                                                        <img src="~/images/Products/@item.Image" class="img-fluid" alt="@item.ProductName" asp-action="Details" asp-controller="Product">
+                                                        <div class="mask-icon">
+                                                            <ul>
+                                                                <li><a asp-action="Details" asp-controller="Product" asp-route-id="@item.ProductId" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                                                <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                                            </ul>
+                                                            <a class="cart" href="#">Add to Cart</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="why-text">
+                                                        <h4>@item.ProductName</h4>
+                                                        <h5> $ @item.Price</h5>
+                                                    </div>
+                                                </div>  
+                                            </div>
+                                         }
+                                        @*@await Html.PartialAsync("_Product") *@                                   
                                     </div>
                                 </div>
                             </div>

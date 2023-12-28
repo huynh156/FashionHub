@@ -160,7 +160,7 @@
             <!-- Start Atribute Navigation -->
             <div class="attr-nav">
                 <ul>
-                    <li class="search"><a href="#"><i class="fa-solid fa-magnifying-glass"></i></a></li> 
+                    <li class="search"><a href="#"><i class="fas fa-magnifying-glass"></i></a></li> 
 					<li class="cart"><a href ="#"><i  class="fa fa-shopping-bag"></i></a></li> 
 
                 </ul>
@@ -174,19 +174,7 @@
     <!-- End Main Top -->
 
     <!-- Start Top Search -->
-<div class="top-search">
-    <div class="container">
-         <form method="get" asp-action="Search" asp-controller="Product">
-
-            <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" placeholder="Search">
-                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
-            </div>
-         </form>
-            @await Html.PartialAsync("_PartialViewProduct",Model)
-    </div>
-</div>
+@await Html.PartialAsync("_SearchPartialView")
 <!-- End Top Search -->
 @RenderBody()
     
@@ -247,7 +235,7 @@
         <div id="mc_embed_shell">
       <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
   <style type="text/css">
-        #mc_embed_signup{background:#fff; false;clear:left; font:14px Helvetica,Arial,sans-serif; width: 600px;}
+        #mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; width: 600px;}
         /* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
            We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
 </style>
@@ -276,43 +264,62 @@
 
 <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script><script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[4]='PHONE';ftypes[4]='phone';fnames[5]='BIRTHDAY';ftypes[5]='birthday';}(jQuery));var $mcj = jQuery.noConflict(true);</script></div>
 
-    </footer>
-    <script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/3d6cd90baac7cb515e052196f/61bb1d81b5b1ee2c30e7c8649.js");</script>
-    <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-    (function(){
-    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-    s1.async=true;
-    s1.src='https://embed.tawk.to/6566f86f26949f791135cd02/1hgd3ktkv';
-    s1.charset='UTF-8';
-    s1.setAttribute('crossorigin','*');
-    s0.parentNode.insertBefore(s1,s0);
-    })();
-    </script>
+</footer>
+<script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/3d6cd90baac7cb515e052196f/61bb1d81b5b1ee2c30e7c8649.js");</script>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6566f86f26949f791135cd02/1hgd3ktkv';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
 <!--End of Tawk.to Script-->
-    <!-- End Footer  -->
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+<!-- End Footer  -->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
 
-    <script src="~/js/jquery-3.2.1.min.js"></script>
-    <script src="~/js/popper.min.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
-    <!-- ALL PLUGINS -->
-    <script src="~/js/jquery.superslides.min.js"></script>
-    <script src="~/js/bootstrap-select.js"></script>
-    <script src="~/js/inewsticker.js"></script>
-    <script src="~/js/bootsnav.js"></script>
-    <script src="~/js/images-loded.min.js"></script>
-    <script src="~/js/isotope.min.js"></script>
-    <script src="~/js/owl.carousel.min.js"></script>
-    <script src="~/js/baguetteBox.min.js"></script>
-    <script src="~/js/form-validator.min.js"></script>
-    <script src="~/js/contact-form-script.js"></script>
-    <script src="~/js/custom.js"></script>
-    <script src="https://kit.fontawesome.com/841530e269.js" crossorigin="anonymous"></script>
-
-    @await RenderSectionAsync("Scripts", required: false)
+<script src="~/js/jquery-3.2.1.min.js"></script>
+<script src="~/js/popper.min.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+<!-- ALL PLUGINS -->
+<script src="~/js/jquery.superslides.min.js"></script>
+<script src="~/js/bootstrap-select.js"></script>
+<script src="~/js/inewsticker.js"></script>
+<script src="~/js/bootsnav.js"></script>
+<script src="~/js/images-loded.min.js"></script>
+<script src="~/js/isotope.min.js"></script>
+<script src="~/js/owl.carousel.min.js"></script>
+<script src="~/js/baguetteBox.min.js"></script>
+<script src="~/js/form-validator.min.js"></script>
+<script src="~/js/contact-form-script.js"></script>
+<script src="~/js/custom.js"></script>
+<script src="https://kit.fontawesome.com/841530e269.js" crossorigin="anonymous"></script>
+<script>
+	//document ready: đã generate html/css
+	$(function () {
+		//gắn sự kiện keyup
+		$("#findword").keyup(function () {
+			$.ajax({
+				url: "/Product/Search",
+				type: "POST",
+				data: {
+					keyword: $(this).val().trim()
+				},
+				success: function(response){
+					$("#result").html(response);
+				}
+			});
+		});
+	});
+</script>
+}
+@await RenderSectionAsync("Scripts", required: false)
+    
 </body>
 </html>

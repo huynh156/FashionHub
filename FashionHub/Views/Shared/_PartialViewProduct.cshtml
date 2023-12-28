@@ -1,23 +1,22 @@
 ﻿@model IEnumerable<FashionHub.Data.Product>
-    <section id="product">
-    
-        <div class="pro-container">
-            @foreach (var item in Model)
-            {
-                <div class="pro">
-                    <a href="/Product/@item.ProductId" class="div-click">
-                        <img src="~/Images/Products/@item.Image" alt="@item.ProductName" />
-                        <div class="des">
-                            <span>@item.Brand.BrandName</span>
-                            <h5>@item.ProductName</h5>
-                            <h4>@item.Price $</h4>
-                        </div>
-                    </a>
-                    <a asp-action="AddToCart"  asp-route-id="@item.ProductId" asp-route-price="@item.Price">Thêm vào giỏ hàng</a>
-                </div>
-
-
-            }
-        </div>  
-
-    </section>
+   <div id="result"></div>
+@section Scripts{
+	<script>
+		//document ready: đã generate html/css
+		$(function () {
+			//gắn sự kiện keyup
+			$("#findword").keyup(function () {
+				$.ajax({
+					url: "/Product/Search",
+					type: "POST",
+					data: {
+						keyword: $(this).val().trim()
+					},
+					success: function(response){
+						$("#result").html(response);
+					}
+				});
+			});
+		});
+	</script>
+}

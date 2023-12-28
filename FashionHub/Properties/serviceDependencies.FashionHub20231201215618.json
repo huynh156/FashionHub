@@ -4,7 +4,7 @@
       "secretStore": "AzureAppSettings",
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/fashionhub/databases/FashionHub",
       "type": "mssql.azure",
-      "connectionId": "ConnectionStrings:FashionHub"
+      "connectionId": "connectionstrings:fashionhub"
     }
   }
 }
