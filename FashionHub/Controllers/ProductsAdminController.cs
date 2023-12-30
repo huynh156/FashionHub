@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FashionHub.Data;
+using FashionHub.Models;
 
 namespace FashionHub.Controllers
 {
@@ -52,8 +53,8 @@ namespace FashionHub.Controllers
         // GET: ProductsAdmin/Create
         public IActionResult Create()
         {
-            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandId");
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId");
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName");
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
             
             return View();
         }
@@ -63,17 +64,40 @@ namespace FashionHub.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductId,ProductName,BrandId,CategoryId,Description,Price,StockQuantity,Image")] Product product)
+        public async Task<IActionResult> Create([Bind("ProductId,ProductName,BrandId,CategoryId,Description,Price,StockQuantity,Image")] Product product,IFormFile ProductImage)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
+
+                // Kiểm tra xem sản phẩm có tồn tại trong cơ sở dữ liệu không
+                var existingProduct = _context.Products.FirstOrDefault(p => p.ProductName == product.ProductName);
+
+                if (existingProduct != null)
+                {
+                    existingProduct.Price = product.Price;
+                    existingProduct.StockQuantity += product.StockQuantity;
+                    existingProduct.Description = product.Description;
+                    if (ProductImage != null)
+                    {
+                        existingProduct.Image = MyTool.UploadImageToFolder(ProductImage, "Products");
+                    }
+                }
+                else
+                {
+                    product.ProductId = Guid.NewGuid().ToString();
+                    if (ProductImage != null)
+                    {
+                        product.Image = MyTool.UploadImageToFolder(ProductImage, "Products");
+                    }
+                    _context.Add(product);
+                }      
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandId", product.BrandId);
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", product.CategoryId);
-            
+
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName");
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
             return View(product);
         }
 
@@ -90,8 +114,8 @@ namespace FashionHub.Controllers
             {
                 return NotFound();
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandId", product.BrandId);
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", product.CategoryId);
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", product.BrandId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", product.CategoryId);
             return View(product);
         }
 
@@ -127,8 +151,8 @@ namespace FashionHub.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandId", product.BrandId);
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryId", product.CategoryId);
+            ViewData["BrandId"] = new SelectList(_context.Brands, "BrandId", "BrandName", product.BrandId);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", product.CategoryId);
             return View(product);
         }
 

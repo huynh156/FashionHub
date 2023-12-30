@@ -60,7 +60,6 @@ namespace FashionHub.Controllers
             var product = await _context.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Category)
-                .Include(p => p.Coupon)
                 .FirstOrDefaultAsync(m => m.ProductId == id);
             if (product == null)
             {
@@ -81,6 +80,22 @@ namespace FashionHub.Controllers
             };
             return View(data);
         }
+        public IActionResult FeatureProduct()
+        {
+            var product = _context.Products.Take(4).ToList();
+            var result = product.Select(p => new FashionHub.ViewModels.ProductVM
+            {
+                ProductId = p.ProductId,
+                ProductName = p.ProductName,
+                Price = p.Price,
+                Image = p.Image,
+                Description = p.Description,
+                CategoryId = p.Category.CategoryName
+            }).ToList();
+
+            return PartialView("_FeatureProduct", result);
+        }
+
         public IActionResult Search()
         {
             return View();
