@@ -6,8 +6,7 @@ namespace FashionHub.ViewModels
     {
 
 
-        public string UserId { get; set; } = null!;
-        [Required(ErrorMessage = "*")]
+        
         public string Username { get; set; }
         [Required(ErrorMessage = "*")]
         public string Password { get; set; }

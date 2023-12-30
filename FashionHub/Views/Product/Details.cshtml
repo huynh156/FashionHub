@@ -12,61 +12,90 @@
                         </div>
                     </div>
                 </div>
-            <div class="col-md-6">
-                    <div class="single-product-details">
-                        <h2>@Model.ProductName</h2>
-                        <h5>$ @Model.Price</h5>
-                        <p class="available-stock"><span> @Model.StockQuantity </span><p>
+                <div class="col-md-6">
+                    <form asp-action="AddToCart" asp-controller="Cart" asp-route-id="@Model.ProductId">
+                        <div class="single-product-details">
+                            <h2>@Model.ProductName</h2>
+                            <h5>$ @Model.Price</h5>
+                            <p class="available-stock"><span> @Model.StockQuantity </span></p>
                             <h4>Short Description:</h4>
-                            <p>@Model.Description </p>
+                            <p>@Model.Description</p>
                             <ul>
-                                 <li>
+                                <li>
                                     <div class="form-group size-st" style='height:36px'>
-                                    <label class="size-label" >Size</label>
-                                    <select id="basic" class="selectpicker show-tick form-control">
-							            <option value="0">Size</option>
-							            <option value="0">S</option>
-							            <option value="1">M</option>
-							            <option value="1">L</option>
-							            <option value="1">XL</option>
-							            <option value="1">XXL</option>
-							            <option value="1">3XL</option>
-							            <option value="1">4XL</option>
-						            </select>
+                                        <label class="size-label">Size</label>
+                                        <select id="basic" class="selectpicker show-tick form-control">
+                                            <option value="0">Size</option>
+                                            <option value="0">S</option>
+                                            <option value="1">M</option>
+                                            <option value="1">L</option>
+                                            <option value="1">XL</option>
+                                            <option value="1">XXL</option>
+                                            <option value="1">3XL</option>
+                                            <option value="1">4XL</option>
+                                        </select>
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="form-group quantity-box">
-                                        <label class="control-label">Quantity</label>
-                                        <input class="form-control" value="0" min="0" max="20" type="number">
+                                    <div class="input-group quantity mb-5 " style="width: 100px;">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border" type="button" onclick="decrementValue()">
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <input type="text" class="form-control form-control-sm text-center border-0" value="1" name="quantity" id="quantityInput">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border" type="button" onclick="incrementValue()">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </li>
                             </ul>
-
-                        <div class="price-box-bar">
-                            <div class="cart-and-bay-btn">
-                                <a class="btn hvr-hover" data-fancybox-close="" href="#">Buy New</a>
-                                <a class="btn hvr-hover" data-fancybox-close="" href="#">Add to cart</a>
+                            <div class="price-box-bar">
+                                <div class="cart-and-bay-btn">
+                                    <button class="btn hvr-hover" data-fancybox-close="" href="#">Buy New</button>
+                                    <button class="btn hvr-hover" data-fancybox-close="" type="submit">Add to cart</button>
+                                </div>
+                            </div>
+                            <div class="add-to-btn">
+                                <div class="add-comp">
+                                    <a class="btn hvr-hover" href="#"><i class="fas fa-heart"></i> Add to wishlist</a>
+                                    <a class="btn hvr-hover" href="#"><i class="fas fa-sync-alt"></i> Add to Compare</a>
+                                </div>
+                                <div class="share-bar">
+                                    <a class="btn hvr-hover" href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                                    <a class="btn hvr-hover" href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a>
+                                    <a class="btn hvr-hover" href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                                    <a class="btn hvr-hover" href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a>
+                                    <a class="btn hvr-hover" href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="add-to-btn">
-                            <div class="add-comp">
-                                <a class="btn hvr-hover" href="#"><i class="fas fa-heart"></i> Add to wishlist</a>
-                                <a class="btn hvr-hover" href="#"><i class="fas fa-sync-alt"></i> Add to Compare</a>
-                            </div>
-                            <div class="share-bar">
-                                <a class="btn hvr-hover" href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a>
-                                <a class="btn hvr-hover" href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a>
-                                <a class="btn hvr-hover" href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a>
-                                <a class="btn hvr-hover" href="#"><i class="fab fa-pinterest-p" aria-hidden="true"></i></a>
-                                <a class="btn hvr-hover" href="#"><i class="fab fa-whatsapp" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    </form>
+                </div> 
             </div>
-        @await Component.InvokeAsync("FeatureProduct")
+             @await Component.InvokeAsync("FeatureProduct")
         </div>
+       
 </div>
+
+
+<script>
+    function incrementValue() {
+        var input = document.getElementById('quantityInput');
+        var value = parseInt(input.value, 10);
+        value = isNaN(value) ? 1 : value;
+        value++;
+        input.value = value;
+    }
+
+    function decrementValue() {
+        var input = document.getElementById('quantityInput');
+        var value = parseInt(input.value, 10);
+        value = isNaN(value) ? 1 : value;
+        value = value > 1 ? value - 1 : 1;
+        input.value = value;
+    }
+</script>
     <!-- End Cart -->
