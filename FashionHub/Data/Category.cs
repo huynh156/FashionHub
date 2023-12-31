@@ -1,4 +1,7 @@
-﻿namespace FashionHub.Data
+﻿using System;
+using System.Collections.Generic;
+
+namespace FashionHub.Data
 {
     public partial class Category
     {

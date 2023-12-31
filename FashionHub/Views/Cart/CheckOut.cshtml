@@ -1,0 +1,219 @@
+﻿ @model IEnumerable<FashionHub.ViewModels.CartItem>
+<!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Checkout</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item active">Checkout</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+
+    <!-- Start Cart  -->
+    <div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    <div class="checkout-address">
+                        <div class="title-left">
+                            <h3>Billing address</h3>
+                        </div>
+                        <form class="needs-validation" asp-action="CheckOut" asp-controller="Cart">
+                            <div class="mb-3 delivery-info">
+                                <label for="username">FullName </label>
+                                <div class="input-group ">
+                                    <input type="text" class="form-control" id="username" placeholder="" >                                 
+                                </div>
+                            </div>
+                            <div class="mb-3 delivery-info ">
+                                <label for="email">Email Address</label>
+                                <input type="email" class="form-control" id="email" placeholder="">
+                                
+                            </div>
+                            <div class="mb-3 delivery-info">
+                                <label for="address">Address</label>
+                                <input type="text" class="form-control" id="address" placeholder="" >
+                                
+                            </div>
+                            <div class="mb-3 delivery-info">
+                                <label for="PhoneNumber">PhoneNumber</label>
+                                <input type="number" class="form-control" id="PhoneNumber" placeholder=""> </div>
+                            
+                            <hr class="mb-4">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="same-address">
+                                <label class="custom-control-label" for="same-address" value="false">Shipping address is the same as my billing address</label>
+                            </div>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="save-info">
+                                <label class="custom-control-label" for="save-info">Save this information for next time</label>
+                            </div>
+                            <hr class="mb-4">
+                            <div class="title"> <span>Payment</span> </div>
+                            <div class="d-block my-3">
+                                <div class="custom-control custom-radio">
+                                    <input id="COD" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                                    <label class="custom-control-label" for="COD">COD</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="VNPAY" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                    <label class="custom-control-label" for="VNPAY">VN PAY</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="Paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+                                    <label class="custom-control-label" for="Paypal">Paypal</label>
+                                </div>
+                            </div>
+                              <div class="col-12 d-flex shopping-box"> <button type="submit" class="ml-auto btn hvr-hover">Place Order</button> </div>
+                            <div id="paypal-button-container" style="max-width:1000px;"></div>
+
+                              <hr class="mb-1"> 
+
+                        </form>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="shipping-method-box">
+                                <div class="title-left">
+                                    <h3>Shipping Method</h3>
+                                </div>
+                                <div class="mb-4">
+                                    <div class="custom-control custom-radio">
+                                        <input id="shippingOption1" name="shipping-option" class="custom-control-input" checked="checked" type="radio">
+                                        <label class="custom-control-label" for="shippingOption1">Standard Delivery</label> <span class="float-right font-weight-bold">FREE</span> </div>
+                                    <div class="ml-4 mb-2 small">(3-7 business days)</div>
+                                    <div class="custom-control custom-radio">
+                                        <input id="shippingOption2" name="shipping-option" class="custom-control-input" type="radio">
+                                        <label class="custom-control-label" for="shippingOption2">Express Delivery</label> <span class="float-right font-weight-bold">$10.00</span> </div>
+                                    <div class="ml-4 mb-2 small">(2-4 business days)</div>
+                                    <div class="custom-control custom-radio">
+                                        <input id="shippingOption3" name="shipping-option" class="custom-control-input" type="radio">
+                                        <label class="custom-control-label" for="shippingOption3">Next Business day</label> <span class="float-right font-weight-bold">$20.00</span> </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12">
+                            <div class="odr-box">
+                                <div class="title-left">
+                                    <h3>Shopping cart</h3>
+                                </div>
+                                <div class="rounded p-2 bg-light">
+                                @foreach(var item in Model)
+                                {
+                                    <div class="media mb-2 border-bottom">
+                                        <div class="media-body"> <a asp-action="Detail" asp-controller="Product" asp-route-id="@item.ProductId"> @item.ProductName</a>
+                                            <div class="small text-muted">Price: $@item.Price <span class="mx-2">|</span> Qty: @item.Quantity <span class="mx-2">|</span> Subtotal: $@(item.Price * item.Quantity)</div>
+                                        </div>
+                                    </div>
+                                }
+                                
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-12">
+                            <div class="order-box">
+                                <div class="title-left">
+                                    <h3>Your order</h3>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="font-weight-bold">Product</div>
+                                    <div class="ml-auto font-weight-bold">Total</div>
+                                </div>
+                                <hr class="my-1">
+                                <div class="d-flex">
+                                    <h4>Sub Total</h4>
+                                    <div class="ml-auto font-weight-bold"> $ @Model.Sum(p=>p.SubTotal) </div>
+                                </div>
+                                <div class="d-flex">
+                                    <h4>Discount</h4>
+                                    <div class="ml-auto font-weight-bold"> $ 0 </div>
+                                </div>
+                                <hr class="my-1">
+                                <div class="d-flex">
+                                    <h4>Coupon Discount</h4>
+                                    <div class="ml-auto font-weight-bold"> $ 0 </div>
+                                </div>
+                                <div class="d-flex">
+                                    <h4>Tax</h4>
+                                    <div class="ml-auto font-weight-bold"> $ @(Model.Sum(p=>p.SubTotal) * 1/10) </div>
+                                </div>
+                                <div class="d-flex">
+                                    <h4>Shipping Cost</h4>
+                                    <div class="ml-auto font-weight-bold"> Free </div>
+                                </div>
+                                <hr>
+                                <div class="d-flex gr-total">
+                                    <h5>Grand Total</h5>
+                                    <div class="ml-auto h5"> $ @(Model.Sum(p => p.SubTotal) + Model.Sum(p => p.SubTotal) * 1/10) </div>
+                                </div>
+                                <hr> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- End Cart -->
+    @section Scripts {
+	<script>
+		$(document).ready(function () {
+			$("#same-address").change(function () {
+				if ($(this).prop("checked")) {
+					$(this).val(true);
+					$(".delivery-info").addClass("d-none");
+				} else {
+					$(this).val(false);
+					$(".delivery-info").removeClass("d-none");
+				}
+			});
+		});
+	</script>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=@ViewBag.PaypalClientId"></script>
+	
+	<script>
+		paypal.Buttons({
+			style: {
+				layout: 'vertical',
+				color: 'silver',
+				tagline: 'false'
+			},
+			createOrder: (data, actions) => {
+				return fetch('/Cart/PaypalOrder', {
+					method: "post",
+				}).then((response) => {
+					if (!response.ok) {
+						return response.json().then(error => { throw error; });
+					}
+
+					return response.json();
+				}).then((order) => order.id)
+					.catch(error => alert(error.message));
+			},
+			onApprove: (data, actions) => {
+				return fetch(`/Cart/CapturePaypalOrder?orderId=${data.orderID}`, {
+					method: "post",
+				}).then((response) => {
+					if (!response.ok) {
+						return response.json().then(error => { throw error; });
+					}
+
+					//Đổi địa chỉ tới action thông báo thành công
+					window.location.href = "/Customer/Orders";
+				}).catch(error => alert(error.message));
+			}
+		}).render('#paypal-button-container');
+	</script>
+
+}

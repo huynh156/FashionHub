@@ -1,10 +1,12 @@
-﻿namespace FashionHub.Data
+﻿using System;
+using System.Collections.Generic;
+
+namespace FashionHub.Data
 {
     public partial class Product
     {
         public Product()
         {
-            Coupons = new HashSet<Coupon>();
             OrderDetails = new HashSet<OrderDetail>();
             PurchaseOrders = new HashSet<PurchaseOrder>();
             Reviews = new HashSet<Review>();
@@ -24,7 +26,6 @@
         public virtual Brand? Brand { get; set; }
         public virtual Category? Category { get; set; }
         public virtual Coupon? Coupon { get; set; }
-        public virtual ICollection<Coupon> Coupons { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }

@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FashionHub.Controllers
 {
-    public class OrdersController : Controller
+    public class OrdersAdminController : Controller
     {
         private readonly FashionHubContext _context;
 
-        public OrdersController(FashionHubContext context)
+        public OrdersAdminController(FashionHubContext context)
         {
             _context = context;
         }

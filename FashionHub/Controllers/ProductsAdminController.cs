@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FashionHub.Data;
 using FashionHub.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FashionHub.Controllers
 {
@@ -18,7 +19,7 @@ namespace FashionHub.Controllers
         {
             _context = context;
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: ProductsAdmin
         public async Task<IActionResult> Index()
         {
@@ -29,7 +30,7 @@ namespace FashionHub.Controllers
 
             return View(data);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: ProductsAdmin/Details/5
         public async Task<IActionResult> Details(string id)
         {
@@ -49,7 +50,7 @@ namespace FashionHub.Controllers
 
             return View(product);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: ProductsAdmin/Create
         public IActionResult Create()
         {
@@ -64,6 +65,7 @@ namespace FashionHub.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("ProductId,ProductName,BrandId,CategoryId,Description,Price,StockQuantity,Image")] Product product,IFormFile ProductImage)
         {
             if (ModelState.IsValid)
@@ -100,7 +102,7 @@ namespace FashionHub.Controllers
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
             return View(product);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: ProductsAdmin/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
@@ -118,7 +120,7 @@ namespace FashionHub.Controllers
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", product.CategoryId);
             return View(product);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: ProductsAdmin/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -155,7 +157,7 @@ namespace FashionHub.Controllers
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", product.CategoryId);
             return View(product);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: ProductsAdmin/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
@@ -175,7 +177,7 @@ namespace FashionHub.Controllers
 
             return View(product);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: ProductsAdmin/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -194,7 +196,7 @@ namespace FashionHub.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize(Roles = "Admin")]
         private bool ProductExists(string id)
         {
           return (_context.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();
