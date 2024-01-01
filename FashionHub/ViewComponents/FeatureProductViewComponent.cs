@@ -21,6 +21,7 @@ namespace FashionHub.ViewComponents
                 ProductName = a.ProductName,
                 Price = a.Price,
                 Image= a.Image,
+                SlugName = a.SlugName,
             });
             return View(data);
 

@@ -4,6 +4,7 @@
     {
         public string ProductId { get; set; }
         public string? ProductName { get; set; }
+        public string? SlugName { get; set; }
         public string? BrandId { get; set; }
         public string? CategoryId { get; set; }
         public string? Description { get; set; }

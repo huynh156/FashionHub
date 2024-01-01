@@ -92,7 +92,7 @@
                                                     <img src="~/images/Products/@item.Image" style="width: 232.5px; height: 232.5px;" class="img-fluid" alt="@item.ProductName" asp-action="Details" asp-controller="Product">
                                                     <div class="mask-icon">
                                                         <ul>
-                                                            <li><a asp-action="Details" asp-controller="Product" asp-route-id="@item.ProductId" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
+                                                            <li><a asp-action="Details" asp-controller="Product" asp-route-tensp="@item.SlugName" data-toggle="tooltip" data-placement="right" title="View"><i class="fas fa-eye"></i></a></li>
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                                             <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                                         </ul>
@@ -100,7 +100,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="why-text" style="min-height: 105px;">
-                                                    <h4>@item.ProductName</h4>
+                                                    <h4><a href="/Products/@item.SlugName">@item.ProductName</a></h4>
+
                                                     <h5> $ @item.Price</h5>
                                                 </div>
                                             </div>

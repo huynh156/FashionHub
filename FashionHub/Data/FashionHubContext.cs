@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using FashionHub.Helper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -232,6 +231,8 @@ namespace FashionHub.Data
 
                 entity.Property(e => e.ProductName).HasMaxLength(255);
 
+                entity.Property(e => e.SlugName).HasMaxLength(255);
+
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.BrandId)
@@ -401,10 +402,5 @@ namespace FashionHub.Data
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
-        public static implicit operator FashionHubContext(PaypalClient v)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -26,6 +26,7 @@ namespace FashionHub.Controllers
             {
                 ProductId = p.ProductId,
                 ProductName = p.ProductName,
+                SlugName = p.SlugName,
                 Price = p.Price,
                 Image = p.Image,
                 Description = p.Description,
@@ -54,13 +55,13 @@ namespace FashionHub.Controllers
 
         //var end_data = data.ToList();
 
-
-        public async Task<IActionResult> Details(string id)
+        [HttpGet("/Products/{tensp}")]
+        public async Task<IActionResult> Details(string tensp)
         {
             var product = await _context.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Category)
-                .FirstOrDefaultAsync(m => m.ProductId == id);
+                .FirstOrDefaultAsync(m => m.SlugName == tensp);
             if (product == null)
             {
                 TempData["Message"] = $"Không tìm thấy sản phẩm {product.ProductName}";
@@ -70,6 +71,7 @@ namespace FashionHub.Controllers
             {
                 ProductId = product.ProductId,
                 ProductName = product.ProductName,
+                SlugName= product.SlugName,
                 BrandId = product.BrandId,
                 CategoryId = product.CategoryId,
                 Price = product.Price,

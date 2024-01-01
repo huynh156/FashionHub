@@ -22,6 +22,7 @@ namespace FashionHub.Data
         public int? StockQuantity { get; set; }
         public string? Image { get; set; }
         public string? CouponId { get; set; }
+        public string? SlugName { get; set; }
 
         public virtual Brand? Brand { get; set; }
         public virtual Category? Category { get; set; }
