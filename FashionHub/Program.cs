@@ -1,5 +1,6 @@
 using FashionHub.Data;
 using FashionHub.Helper;
+using FashionHub.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +23,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     options.LoginPath = "/Customer/Login";
     options.AccessDeniedPath = "/AccessDenied";
 });
+builder.Services.AddSingleton<IVnPayService, VnPayService>();
+
 builder.Services.AddSingleton(x =>
     new PaypalClient(
         builder.Configuration["PayPalOptions:ClientId"],

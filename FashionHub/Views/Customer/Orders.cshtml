@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<FashionHub.Data.Order>
-
+@{
+    var message = TempData["Message"] as string;
+}
 <div class="all-title-box">
     <div class="container ">
         <div class="row">
@@ -14,6 +16,12 @@
     </div>
 </div>
 <div class="cart-box-main">
+    @if (!string.IsNullOrEmpty(message))
+{
+    <div class="alert alert-danger">
+        @message
+    </div>
+}
     <div class="container" style="max-width: 95%;">
         <div class="row">
             <div class="col-lg-12">

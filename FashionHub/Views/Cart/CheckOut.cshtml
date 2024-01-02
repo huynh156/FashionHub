@@ -48,7 +48,7 @@
                             
                             <hr class="mb-4">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="same-address">
+                                <input type="checkbox" class="custom-control-input" id="same-address" name="SameAddress">
                                 <label class="custom-control-label" for="same-address" value="false">Shipping address is the same as my billing address</label>
                             </div>
                             <div class="custom-control custom-checkbox">
@@ -71,8 +71,10 @@
                                     <label class="custom-control-label" for="Paypal">Paypal</label>
                                 </div>
                             </div>
-                              <div class="col-12 d-flex shopping-box"> <button type="submit" class="ml-auto btn hvr-hover">Place Order</button> </div>
-                            <div id="paypal-button-container" style="max-width:1000px;"></div>
+                              <div class="col-12 d-flex shopping-box"> <input  type="submit" name="payment"  value="Thanh Toán Bằng COD" class="ml-auto btn hvr-hover"><input> </div>
+                             <div class="col-12 d-flex shopping-box"> <input  type="submit"  name="payment" value="Thanh Toán Bằng VN PAY" class="ml-auto btn hvr-hover"><input> </div>
+
+                              <div id="paypal-button-container" style="max-width:1000px;"></div>
 
                               <hr class="mb-1"> 
 
