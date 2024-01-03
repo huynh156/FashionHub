@@ -1,0 +1,10 @@
+﻿@model IEnumerable<FashionHub.ViewModels.BrandsVM>
+
+<div class="brand-box">
+        @foreach (var item in Model)
+        {
+            <div class="radio radio-danger">
+                <a asp-controller="Product" asp-action="Index" asp-route-brandId="@item.BrandId" class="list-group-item list-group-item-action"> @item.BrandName  <small class="text-muted"></small></a>
+            </div>
+    }
+</div>

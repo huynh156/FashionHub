@@ -25,6 +25,8 @@ namespace FashionHub.Data
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<PurchaseOrder> PurchaseOrders { get; set; } = null!;
         public virtual DbSet<Review> Reviews { get; set; } = null!;
+        public virtual DbSet<Shipper> Shippers { get; set; } = null!;
+        public virtual DbSet<Status> Statuses { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<Wishlist> Wishlists { get; set; } = null!;
 
@@ -33,7 +35,7 @@ namespace FashionHub.Data
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=LAPTOP-PACMQVLJ\\MSSQLSERVER01; Database=FashionHub;Integrated Security=True;");
+                optionsBuilder.UseSqlServer("Server=.; Database=FashionHub;Integrated Security=True;");
             }
         }
 
@@ -88,7 +90,7 @@ namespace FashionHub.Data
 
             modelBuilder.Entity<Coupon>(entity =>
             {
-                entity.HasIndex(e => e.Code, "UQ__Coupons__A25C5AA7ECABBDB0")
+                entity.HasIndex(e => e.Code, "UQ__Coupons__A25C5AA7D08B879B")
                     .IsUnique();
 
                 entity.Property(e => e.CouponId)
@@ -112,7 +114,32 @@ namespace FashionHub.Data
                     .IsUnicode(false)
                     .HasColumnName("OrderID");
 
+                entity.Property(e => e.Address).HasMaxLength(50);
+
+                entity.Property(e => e.CouponId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("CouponID");
+
+                entity.Property(e => e.ExpectedDeliveryDate).HasColumnType("date");
+
+                entity.Property(e => e.FullName).HasMaxLength(50);
+
+                entity.Property(e => e.Notes).HasMaxLength(50);
+
                 entity.Property(e => e.OrderDate).HasColumnType("date");
+
+                entity.Property(e => e.PaymentMethod).HasMaxLength(50);
+
+                entity.Property(e => e.PhoneNumber).HasMaxLength(50);
+
+                entity.Property(e => e.ReceivedDate).HasColumnType("date");
+
+                entity.Property(e => e.ShipperId).HasColumnName("ShipperID");
+
+                entity.Property(e => e.ShippingMethod).HasMaxLength(50);
+
+                entity.Property(e => e.StatusId).HasColumnName("StatusID");
 
                 entity.Property(e => e.TotalAmount).HasColumnType("decimal(10, 2)");
 
@@ -120,6 +147,21 @@ namespace FashionHub.Data
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .HasColumnName("UserID");
+
+                entity.HasOne(d => d.Coupon)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.CouponId)
+                    .HasConstraintName("FK_Orders_Coupons");
+
+                entity.HasOne(d => d.Shipper)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.ShipperId)
+                    .HasConstraintName("FK__Orders__ShipperI__282DF8C2");
+
+                entity.HasOne(d => d.Status)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.StatusId)
+                    .HasConstraintName("FK__Orders__StatusID__2739D489");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Orders)
@@ -189,6 +231,8 @@ namespace FashionHub.Data
 
                 entity.Property(e => e.ProductName).HasMaxLength(255);
 
+                entity.Property(e => e.SlugName).HasMaxLength(255);
+
                 entity.HasOne(d => d.Brand)
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.BrandId)
@@ -207,13 +251,10 @@ namespace FashionHub.Data
 
             modelBuilder.Entity<PurchaseOrder>(entity =>
             {
-                entity.HasKey(e => e.OrderId)
-                    .HasName("PK__Purchase__C3905BAFB1E867FF");
-
-                entity.Property(e => e.OrderId)
+                entity.Property(e => e.Id)
                     .HasMaxLength(50)
                     .IsUnicode(false)
-                    .HasColumnName("OrderID");
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.BrandId)
                     .HasMaxLength(50)
@@ -221,6 +262,11 @@ namespace FashionHub.Data
                     .HasColumnName("BrandID");
 
                 entity.Property(e => e.OrderDate).HasColumnType("date");
+
+                entity.Property(e => e.OrderId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("OrderID");
 
                 entity.Property(e => e.ProductId)
                     .HasMaxLength(50)
@@ -266,6 +312,28 @@ namespace FashionHub.Data
                     .WithMany(p => p.Reviews)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("FK__Reviews__UserID__571DF1D5");
+            });
+
+            modelBuilder.Entity<Shipper>(entity =>
+            {
+                entity.ToTable("Shipper");
+
+                entity.Property(e => e.ShipperId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("ShipperID");
+
+                entity.Property(e => e.ShipperName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Status>(entity =>
+            {
+                entity.ToTable("Status");
+
+                entity.Property(e => e.StatusId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("StatusID");
+
+                entity.Property(e => e.StatusName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<User>(entity =>

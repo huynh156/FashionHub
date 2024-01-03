@@ -348,9 +348,12 @@
          color: #eee;
     }
 }
- @media (max-width: 992px) {
+button.btn.dropdown-toggle.btn-default.btn-light{
+    max-height:36px;
+}
+@media (max-width: 992px) {
     /* Navbar General ------*/
-     nav.navbar .navbar-brand{
+    nav .navbar .navbar-brand{
          margin-top: 0;
          position: relative;
          top: -2px;
@@ -2312,6 +2315,7 @@
      margin-bottom: 20px;
 }
  .single-product-details ul{
+     max-height:36px;
      display: inline-block;
      width: 100%;
      border: 1px #010101 dashed;

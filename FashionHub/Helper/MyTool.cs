@@ -1,0 +1,38 @@
+﻿using System.Text;
+
+namespace FashionHub.Models
+{
+    public class MyTool
+    {
+        public static string UploadImageToFolder(IFormFile myfile, string folder = "Products")
+
+        {
+            try
+            {
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", folder, myfile.FileName);
+                using (var newFile = new FileStream(filePath, FileMode.Create))
+                {
+                    myfile.CopyTo(newFile);
+                }
+                return myfile.FileName;
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
+
+        }
+        public static string GenerateRamdomKey(int length = 5)
+        {
+            var pattern = @"qazwsxedcrfvtgbyhnujmiklopQAZWSXEDCRFVTGBYHNUJMIKLOP!";
+            var sb = new StringBuilder();
+            var rd = new Random();
+            for (int i = 0; i < length; i++)
+            {
+                sb.Append(pattern[rd.Next(0, pattern.Length)]);
+            }
+
+            return sb.ToString();
+        }
+    }
+}

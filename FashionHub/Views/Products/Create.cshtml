@@ -1,0 +1,140 @@
+﻿@model FashionHub.Data.Product
+
+@{
+    ViewBag.Title = "Create Product";
+}
+
+<h2>Create Product</h2>
+
+<form id="mainForm" asp-action="Create" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="ProductId" class="control-label"></label>
+        <input asp-for="ProductId" class="form-control" />
+        <span asp-validation-for="ProductId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ProductName" class="control-label"></label>
+        <input asp-for="ProductName" class="form-control" />
+        <span asp-validation-for="ProductName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BrandId" class="control-label"></label>
+        @Html.DropDownListFor(model => model.BrandId, (IEnumerable<SelectListItem>)ViewBag.BrandId, "Select Brand", new { @class = "form-control" })
+        <span asp-validation-for="BrandId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CategoryId" class="control-label"></label>
+        @Html.DropDownListFor(model => model.CategoryId, (IEnumerable<SelectListItem>)ViewBag.CategoryId, "Select Category", new { @class = "form-control" })
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price" class="control-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="StockQuantity" class="control-label"></label>
+        <input asp-for="StockQuantity" class="form-control" />
+        <span asp-validation-for="StockQuantity" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Image" class="control-label"></label>
+        <input type="file" name="ProductImage" class="form-control" />
+    </div>
+    <div id="formContainer">
+
+    </div>
+    <button type="button" id="showFormButton">Load Partial View</button>
+    
+    <input type="submit" value="Create Product"  id="submitPartialForm"/>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+$(document).ready(function () {
+    let formCounter = 1;
+
+    $("#showFormButton").click(function () {
+        console.log("Button Clicked");
+        addNewForm();
+    });
+
+    function addNewForm() {
+        // Gọi Ajax để lấy nội dung của form từ server
+        $.ajax({
+            url: '@Url.Action("GetForm", "Products")', 
+            type: 'GET',
+            success: function (response) {
+                // Tạo một container mới cho mỗi form
+                const formContainer = $('<div class="form-container"></div>');
+
+                // Thêm form vào container và thêm container vào formContainer
+                formContainer.append(response);
+                $("#formContainer").append(formContainer);
+
+                // Gán ID cho form để đảm bảo tính duy nhất
+                const formId = `form${formCounter}`;
+                formContainer.find('form').attr('id', formId);
+
+                // Tăng chỉ số đếm cho form tiếp theo
+                formCounter++;
+            },
+            error: function (error) {
+                console.error("Error loading form:", error);
+            }
+        });
+    }
+    $(document).ready(function () {
+        // Xử lý sự kiện khi click vào button để gọi PartialView
+        $("#loadPartialView").click(function () {
+            $.get('@Url.Action("Create", "Products")', function (data) {
+                $("#formContainer").html(data);
+            });
+        });
+
+        // Xử lý sự kiện khi click vào button "Create Product" trong partial view
+        $("#formContainer").on("click", "#submitPartialForm", function () {
+            var formData = new FormData($("#mainForm")[0]);
+
+            $.ajax({
+                url: '@Url.Action("Create", "Products")',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    // Xử lý phản hồi sau khi submit thành công (nếu cần)
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý lỗi nếu có
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+});
+
+</script>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<style>
+    .form-group {
+        display: inline-block;
+    }
+
+    .col-md-4 {
+        max-width: 90%;
+        margin: 0 auto;
+    }
+</style>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

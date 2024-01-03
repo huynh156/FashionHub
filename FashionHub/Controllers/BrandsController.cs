@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using FashionHub.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using FashionHub.Data;
 
 namespace FashionHub.Controllers
 {
@@ -21,9 +16,9 @@ namespace FashionHub.Controllers
         // GET: Brands
         public async Task<IActionResult> Index()
         {
-              return _context.Brands != null ? 
-                          View(await _context.Brands.ToListAsync()) :
-                          Problem("Entity set 'FashionHubContext.Brands'  is null.");
+            return _context.Brands != null ?
+                        View(await _context.Brands.ToListAsync()) :
+                        Problem("Entity set 'FashionHubContext.Brands'  is null.");
         }
 
         // GET: Brands/Details/5
@@ -59,7 +54,7 @@ namespace FashionHub.Controllers
         {
             if (ModelState.IsValid)
             {
-                brand.BrandId= Guid.NewGuid().ToString();
+                brand.BrandId = Guid.NewGuid().ToString();
                 _context.Add(brand);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -150,14 +145,14 @@ namespace FashionHub.Controllers
             {
                 _context.Brands.Remove(brand);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool BrandExists(string id)
         {
-          return (_context.Brands?.Any(e => e.BrandId == id)).GetValueOrDefault();
+            return (_context.Brands?.Any(e => e.BrandId == id)).GetValueOrDefault();
         }
     }
 }
