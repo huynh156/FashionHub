@@ -1,7 +1,10 @@
 ﻿using FashionHub.Data;
 using FashionHub.ViewModels;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+
 
 namespace FashionHub.Controllers
 {
@@ -80,6 +83,10 @@ namespace FashionHub.Controllers
                 Description = product.Description,
 
             };
+            string currentUrl = HttpContext.Request.GetEncodedUrl();
+            ViewData["CurrentUrl"] = currentUrl;
+
+
             return View(data);
         }
         public IActionResult FeatureProduct()

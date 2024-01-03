@@ -1,5 +1,14 @@
 ﻿@model FashionHub.ViewModels.ProductVM
 
+
+<head>
+    <meta property="og:title" content="FashionHub-@Model.ProductName" />
+    <meta property="og:type" content="Website" />
+    <meta property="og:description" content="@Model.Description" />
+    <meta property="og:url" content="@ViewBag.CurrentUrl" />
+    <meta property="og:image" content=" ~ /images/Products/@Model.Image" />
+</head>
+
 <div class="shop-detail-box-main">
         <div class="container">
             <div class="row">
